@@ -14,35 +14,43 @@ final List<Map> sc = [
   },
   {
     "id": 2,
-    "name": "abc",
+    "name": "xyz",
     "no": 4,
-    "ss": ["AFEFEF", "efefefef", "efefavav"],
-    "ss2": ["AFEVEV", "afeefefef", "efefr3r3r"],
+    "ss": [
+      "AFEFEFffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+      "efefefef",
+      "efefavav"
+    ],
+    "ss2": [
+      "AFEVEVfffffffffffffffffffffffffffffffffffffffffff",
+      "afeefefef",
+      "efefr3r3r"
+    ],
   },
   {
     "id": 3,
-    "name": "abc",
+    "name": "pqr",
     "no": 4,
     "ss": ["AFEFEF", "efefefef", "efefavav"],
     "ss2": ["AFEVEV", "afeefefef", "efefr3r3r"],
   },
   {
     "id": 4,
-    "name": "abc",
+    "name": "def",
     "no": 4,
     "ss": ["AFEFEF", "efefefef", "efefavav"],
     "ss2": ["AFEVEV", "afeefefef", "efefr3r3r"],
   },
   {
     "id": 5,
-    "name": "abc",
+    "name": "ghi",
     "no": 4,
     "ss": ["AFEFEF", "efefefef", "efefavav"],
     "ss2": ["AFEVEV", "afeefefef", "efefr3r3r"],
   },
   {
     "id": 6,
-    "name": "abc",
+    "name": "ijk",
     "no": 4,
     "ss": ["AFEFEF", "efefefef", "efefavav"],
     "ss2": ["AFEVEV", "afeefefef", "efefr3r3r"],
@@ -53,6 +61,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -148,8 +157,43 @@ class MyApp extends StatelessWidget {
 class Detail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text("afwfewf"),
+    final routeArg =
+        ModalRoute.of(context).settings.arguments as Map<String, dynamic>;
+    //final detailId = routeArg['id'];
+    final selectMeal =
+        sc.firstWhere((element) => element['id'] == routeArg['id']);
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(selectMeal['name']),
+        actions: [
+          Padding(
+            padding: EdgeInsets.only(right: 7),
+            child: Icon(Icons.settings),
+          )
+        ],
+      ),
+      body: ListView.builder(
+          itemCount: selectMeal['ss'].length,
+          itemBuilder: (BuildContext context, int index) {
+            print(selectMeal['ss'].length);
+            return Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(25),
+                color: Colors.white,
+              ),
+              width: double.infinity,
+              height: 110,
+              margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+              child: Column(
+                children: [
+                  Text(selectMeal['ss'][index]),
+                  Divider(),
+                  Text(selectMeal['ss2'][index]),
+                ],
+              ),
+            );
+          }),
     );
   }
 }
